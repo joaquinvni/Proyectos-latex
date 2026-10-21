@@ -1,0 +1,23 @@
+\babel@toc {spanish}{}\relax 
+\contentsline {section}{\numberline {1}Objetivos}{2}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Objetivo general}{2}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Objetivos específicos}{2}{subsection.1.2}%
+\contentsline {section}{\numberline {2}Teoría}{3}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Estabilidad de tensión de corto plazo y FIDVR}{3}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Simulación dinámica RMS}{3}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Criterio de recuperación de tensión}{4}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Integral de violación de trayectoria (TVI)}{4}{subsection.2.4}%
+\contentsline {subsection}{\numberline {2.5}Análisis de contingencias}{4}{subsection.2.5}%
+\contentsline {subsection}{\numberline {2.6}Compensación dinámica de reactivos: STATCOM}{5}{subsection.2.6}%
+\contentsline {subsection}{\numberline {2.7}Optimización de caja negra}{6}{subsection.2.7}%
+\contentsline {subsubsection}{\numberline {2.7.1}Formulación del problema}{6}{subsubsection.2.7.1}%
+\contentsline {subsubsection}{\numberline {2.7.2}Manejo de restricciones mediante penalización}{6}{subsubsection.2.7.2}%
+\contentsline {subsubsection}{\numberline {2.7.3}Evaluación secuencial con corte anticipado}{6}{subsubsection.2.7.3}%
+\contentsline {subsection}{\numberline {2.8}Algoritmo MVMO}{7}{subsection.2.8}%
+\contentsline {subsection}{\numberline {2.9}Verificación de resultados}{8}{subsection.2.9}%
+\contentsline {section}{\numberline {3}Método y desarrollo}{9}{section.3}%
+\contentsline {section}{\numberline {4}Ensayo}{10}{section.4}%
+\contentsline {section}{\numberline {5}Crítica y comentarios}{11}{section.5}%
+\contentsline {section}{\numberline {6}Bibliografía}{12}{section.6}%
+\contentsline {section}{Referencias}{12}{section.6}%
+\contentsline {section}{\numberline {7}Apéndices}{13}{section.7}%

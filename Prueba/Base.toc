@@ -1,0 +1,9 @@
+\babel@toc {spanish}{}\relax 
+\contentsline {section}{\numberline {1}Objetivos}{2}{section.1}%
+\contentsline {section}{\numberline {2}Teoría}{3}{section.2}%
+\contentsline {section}{\numberline {3}Método y desarrollo}{4}{section.3}%
+\contentsline {section}{\numberline {4}Ensayo}{5}{section.4}%
+\contentsline {section}{\numberline {5}Crítica y comentarios}{6}{section.5}%
+\contentsline {section}{\numberline {6}Bibliografía}{7}{section.6}%
+\contentsline {section}{Referencias}{7}{section.6}%
+\contentsline {section}{\numberline {7}Apéndices}{8}{section.7}%

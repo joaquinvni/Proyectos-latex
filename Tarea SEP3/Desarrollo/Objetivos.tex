@@ -1,0 +1,13 @@
+\subsection{Objetivo general}
+
+Determinar la capacidad total mínima de compensación dinámica (STATCOM), distribuida en cuatro barras, que elimina las violaciones de trayectoria de tensión (TVI) en las tres contingencias que las producen.
+
+\subsection{Objetivos específicos}
+
+\begin{enumerate}
+    \item Implementar una función que, dada una línea fallada, entregue las barras con TVI distinta de cero y su valor, utilizando la envolvente de tensión con $\beta = 0.05$ y $v_{st} = 0.9$ p.u.
+    \item Aplicar la función a todas las líneas del sistema (excluyendo los circuitos paralelos), ordenar las contingencias según su TVI total e identificar las barras con mayor TVI acumulada.
+    \item Modelar un STATCOM en cada una de las cuatro barras con mayor TVI acumulada, a partir de la plantilla de la librería \textit{Templates} de PowerFactory, y verificar su funcionamiento ante la contingencia Line 28 - 29.
+    \item Incorporar la función de cálculo de TVI en una función objetivo con penalización y determinar, mediante MVMO, las cuatro capacidades que eliminan la TVI en las tres contingencias con la menor capacidad total posible.
+    \item Implementar la evaluación secuencial con corte anticipado y comparar el número de simulaciones ejecutadas con el caso sin corte anticipado ($3 \times$ número de evaluaciones).
+\end{enumerate}

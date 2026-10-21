@@ -1,0 +1,24 @@
+# Fdb version 4
+["pdflatex"] 1791254963.47298 "c:/Users/jivn0/OneDrive/Documentos/Latex/Proyectos-latex/Prueba/main.tex" "build/main.pdf" "main" 1791254964.14682 2
+  "C:/Users/jivn0/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1759354930 13257343 2bdd6a9b0adcca13cd4a1055327efcb1 ""
+  "C:/Users/jivn0/AppData/Local/Programs/MiKTeX/fonts/tfm/public/cm/cmr12.tfm" 1136765053 1288 655e228510b4c2a1abe905c368440826 ""
+  "C:/Users/jivn0/AppData/Local/Programs/MiKTeX/tex/generic/babel/babel.sty" 1754220793 146665 9149bce97203d4030d7cbe4f4e85dfc4 ""
+  "C:/Users/jivn0/AppData/Local/Programs/MiKTeX/tex/generic/babel/locale/es/babel-es.ini" 1754220795 4345 33a8cc6f0a7c6afcb84895b2c963a4e5 ""
+  "C:/Users/jivn0/AppData/Local/Programs/MiKTeX/tex/generic/babel/locale/es/babel-spanish.tex" 1754220795 374 26aa36054295520df734dd14cd75addc ""
+  "C:/Users/jivn0/AppData/Local/Programs/MiKTeX/tex/generic/babel/txtbabel.def" 1754220793 5231 82bb24bf20af7e4d760717f2cadb5170 ""
+  "C:/Users/jivn0/AppData/Local/Programs/MiKTeX/tex/latex/arabi/bblopts.cfg" 1705750854 902 c30e5c373bc58bde21f8f63a3091626f ""
+  "C:/Users/jivn0/AppData/Local/Programs/MiKTeX/tex/latex/babel-spanish/spanish.ldf" 1622279580 26965 3b6d1655ad716f98e788b1fb9f2e87b8 ""
+  "C:/Users/jivn0/AppData/Local/Programs/MiKTeX/tex/latex/base/article.cls" 1749467999 20144 b966087dda3b194755eb460d32e2ef75 ""
+  "C:/Users/jivn0/AppData/Local/Programs/MiKTeX/tex/latex/base/size12.clo" 1749467999 8449 8dc66c6c313c8eb2d774af83bca435dd ""
+  "C:/Users/jivn0/AppData/Local/Programs/MiKTeX/tex/latex/fontspec/fontspec.sty" 1715414856 3755 4872b99d810c024f9c09bb1c62ffee3b ""
+  "C:/Users/jivn0/AppData/Local/Programs/MiKTeX/tex/latex/l3backend/l3backend-pdftex.def" 1751005717 30351 a2b09edc6c93a742566b222c33d0278e ""
+  "C:/Users/jivn0/AppData/Local/Programs/MiKTeX/tex/latex/l3kernel/expl3.sty" 1755079871 6558 773e78b2bed3fca0525bb56baa46bce5 ""
+  "C:/Users/jivn0/AppData/Local/Programs/MiKTeX/tex/latex/l3packages/xparse/xparse.sty" 1724854269 9783 ab4bee47700c04aadedb8da27591b0ab ""
+  "build/main.aux" 1791254955 32 3985256e7290058c681f74d7a3565a19 "pdflatex"
+  "c:/Users/jivn0/OneDrive/Documentos/Latex/Proyectos-latex/Prueba/main.tex" 1791265528 3783 b5324c0080b1e0a9e74980d55b8387bc ""
+  "main.tex" 1791265528 3783 b5324c0080b1e0a9e74980d55b8387bc ""
+  (generated)
+  "build/main.aux"
+  "build/main.log"
+  "build/main.pdf"
+  (rewritten before read)

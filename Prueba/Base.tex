@@ -1,0 +1,140 @@
+\documentclass[final, letterpaper, 12pt]{article}
+%%%%%%%%%%%%%%%%% Idioma y fuentes %%%%%%%%%
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{fontspec} % para usar fuentes del sistema
+\setmainfont{Times New Roman}[
+  BoldFont={Times New Roman Bold}, 
+  ItalicFont={Times New Roman Italic}, 
+  BoldItalicFont={Times New Roman Bold Italic}]
+\usepackage{amsmath, amsbsy}
+\usepackage{unicode-math}
+\setmathfont{Cambria Math}
+\usepackage{microtype}
+%%%%%%%%%%%%%%%%% Paquetes útiles %%%%%%%%%%
+\usepackage{enumitem}
+\usepackage[hypcap]{caption}
+\captionsetup{font={small,it}, labelfont={small,it},}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{mathrsfs}
+\let\eth\relax %arreglar error linea 20 de esta pagina
+
+\usepackage{listings}
+\usepackage{color}
+\usepackage{longtable}
+\usepackage{fancyhdr}
+\usepackage{import}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage[margin=0.5in, foot=30pt, head=10pt, bottom=1.3in]{geometry}
+\usepackage{hyphenat}
+\usepackage[document]{ragged2e}
+\usepackage{array}
+\usepackage{epstopdf}
+\usepackage{imakeidx}
+\usepackage[bookmarks=true, hidelinks]{hyperref}
+\usepackage{bookmark}
+\usepackage{titlesec}
+\usepackage{siunitx}
+%\usepackage{gensymb}
+\usepackage{setspace}
+\usepackage{comment}
+\usepackage{amsfonts}
+\usepackage{makecell}
+\usepackage{float}
+
+
+%\usepackage{subfigure}
+\usepackage{subcaption}
+\usepackage{placeins}
+%%%%%%%%%%%%%%%%% Configuración listings %%%%%%%%%%%%%%%
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{darkblue}{rgb}{0,0,0.6}
+\definecolor{darkgray}{rgb}{0.3,0.3,0.3}
+\definecolor{lightgray}{rgb}{0.98,0.98,0.98}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\lstset{frame=tb,
+   language=Matlab,
+   aboveskip=3mm,
+   belowskip=3mm,
+   showstringspaces=false,
+   columns=flexible,
+   basicstyle={\small\ttfamily},
+   numbers=none,
+   numberstyle=\tiny\color{gray},
+   keywordstyle=\color{blue},
+   commentstyle=\color{dkgreen},
+   stringstyle=\color{mauve},
+   breaklines=true,
+   breakatwhitespace=true,
+   tabsize=3}
+%%%%%%%%%%%%%%%%% Encabezado y pie %%%%%%%%%%%%%%%
+\geometry{left=2cm, right=2cm, top=2.5cm, bottom=3cm}
+\pagestyle{fancy}
+\fancyhead{}
+\fancyfoot{}
+\fancyfoot[L]{Grupo N°3}
+\fancyfoot[R]{\thepage}
+\fancyhead[R]{ELI327 - Laboratorio de máquinas eléctricas }
+\fancyhead[L]{DIE, UTFSM}
+\renewcommand{\footrulewidth}{0.9pt}
+\setlength{\headheight}{0.09\linewidth}
+%%%%%%%%%%%%%%%%% Documento %%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\justifying
+
+\begin{titlepage}
+    \begin{center}
+        \vspace*{0.8cm}
+        
+        \includegraphics[width=0.8\textwidth]{Logo-DIE-vertical-con-fondo.jpg}\\
+        \vspace{0.9cm}
+        \textbf{{\fontsize{14}{16}\selectfont \LARGE{Laboratorio de máquinas eléctricas}}}\\
+        \vspace{0.65cm}
+        \headrule
+        \vspace{0.4cm}
+        \textbf{{\fontsize{14}{16}\selectfont \LARGE{Protocolo 1 - Motor asincrónico sincronizado y estudio de asimetrías en rotor}}}\\
+        \textbf{\uppercase{Grupo N$^\circ$3\\}}
+        \vspace{0.4cm}
+        \headrule
+        \vspace{1.4cm}
+Autores:\\
+        Joaquín Vargas, ROL: 202023004-8\\
+        \vspace{0.7cm}
+        Profesor: Maximiliano Trujillo\\
+        \vspace{1cm}
+        Valparaíso, Chile\\
+        \today
+        
+\end{center}       
+\end{titlepage}
+
+
+
+\newpage
+\tableofcontents 
+\newpage
+\setlength{\parindent}{0pt} % sin sangría
+
+\section{Objetivos}
+\input{Desarrollo/Objetivos}
+\newpage
+\section{Teoría}
+\input{Desarrollo/Teoria}
+\newpage
+\section{Método y desarrollo}
+\input{Desarrollo/Metodo y desarrollo}
+\newpage
+\section{Ensayo}
+\input{Desarrollo/Ensayo}
+\newpage
+\section{Crítica y comentarios}
+\input{Desarrollo/Critica y comentarios}
+\newpage
+\section{Bibliografía}
+\input{Desarrollo/Bibliografia}
+\newpage
+\section{Apéndices}
+\input{Desarrollo/Apendice}
+
+\end{document}

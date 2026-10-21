@@ -1,0 +1,181 @@
+
+\subsection{Estabilidad de tensión de corto plazo y FIDVR}
+
+La estabilidad de tensión es la capacidad de un sistema eléctrico de potencia (SEP) de mantener tensiones aceptables en todas sus barras tras una perturbación. La estabilidad de tensión de corto plazo (STVS, \textit{short-term voltage stability}) abarca una ventana de algunos segundos y está dominada por la dinámica de componentes de respuesta rápida, como motores de inducción, cargas controladas electrónicamente y convertidores HVDC.
+
+En sistemas con alta participación de motores de inducción aparece el fenómeno de recuperación retardada de tensión inducida por fallas (FIDVR, \textit{fault-induced delayed voltage recovery}). Su mecanismo es el siguiente:
+
+\begin{enumerate}
+    \item Un cortocircuito deprime la tensión en las barras cercanas a la falla.
+    \item Los motores de inducción, al ver reducido su torque eléctrico, se desaceleran.
+    \item Tras el despeje de la falla, la tensión comienza a recuperarse y los motores intentan reacelerar, absorbiendo una gran cantidad de potencia reactiva.
+    \item Si el sistema no dispone de suficiente soporte de reactivos, la tensión permanece deprimida durante varios segundos, e incluso puede ocurrir estancamiento (\textit{stalling}) de los motores.
+\end{enumerate}
+
+El movimiento del rotor de un motor se describe mediante la ecuación de oscilación
+\begin{equation}
+    \frac{d\omega_r}{dt} = \frac{1}{2H}\left(T_e - T_m\right),
+\end{equation}
+donde $H$ es la inercia, $T_e$ el torque eléctrico, $T_m$ el torque mecánico y $\omega_r$ la velocidad angular del rotor. Al caer la tensión, $T_e$ (que depende aproximadamente del cuadrado de la tensión) disminuye, $\omega_r$ cae y el deslizamiento aumenta, lo que eleva el consumo de reactivos durante la recuperación.
+
+\subsection{Simulación dinámica RMS}
+
+Los estudios de estabilidad de corto plazo se realizan mediante simulaciones RMS (valores eficaces, secuencia positiva), que son adecuadas para fenómenos entre aproximadamente $0.1$ y $3$ Hz y tienen un costo computacional menor que las simulaciones EMT. El comportamiento del sistema se representa mediante un conjunto de ecuaciones diferenciales-algebraicas (DAE):
+\begin{align}
+    \dot{\mathbf{x}} &= \mathbf{f}(\mathbf{x}, \mathbf{y}, t), \\
+    \mathbf{0} &= \mathbf{g}(\mathbf{x}, \mathbf{y}, t),
+\end{align}
+donde $\mathbf{x}$ son las variables de estado (máquinas, controles, motores), $\mathbf{y}$ las variables algebraicas (tensiones de barra) y $t$ el tiempo. Las condiciones iniciales $\mathbf{x}(t_0)$ e $\mathbf{y}(t_0)$ se obtienen a partir de un flujo de potencia. Luego, las DAE se resuelven mediante integración numérica con un paso de tiempo $\Delta t$.
+
+El paso de integración influye directamente en la exactitud. Al incorporar equipos basados en electrónica de potencia, como los STATCOM, las constantes de tiempo del control son pequeñas y un paso grande produce resultados oscilatorios o divergentes. Por ello, el paso debe reducirse hasta que una reducción adicional no modifique las curvas.
+
+\subsection{Criterio de recuperación de tensión}
+
+Para juzgar si una recuperación es aceptable se compara la trayectoria de tensión $v(t)$ de cada barra con un criterio o envolvente. Las empresas y operadores definen límites de tensión mínimos que son más permisivos durante los primeros segundos posteriores al despeje y más exigentes a medida que transcurre el tiempo. La inspección visual de cada trayectoria no es práctica en estudios con muchas contingencias, por lo que se emplean índices que cuantifican la violación del criterio.
+
+\subsection{Integral de violación de trayectoria (TVI)}
+
+La TVI (\textit{Trajectory Violation Integral}), propuesta en [1], cuantifica la magnitud y la duración de la violación de la envolvente de tensión. Para la barra $i$ se define de forma general como
+\begin{equation}
+    \mathrm{TVI}_i = \int_{t_{cl}}^{t_f} \max\!\big(0,\; v_{env}(t) - v_i(t)\big)\, dt,
+    \label{eq:tvi}
+\end{equation}
+donde $t_{cl}$ es el instante de despeje de la falla, $t_f$ el tiempo final de simulación, $v_i(t)$ la tensión de la barra $i$ y $v_{env}(t)$ la envolvente inferior. Las propiedades relevantes son:
+
+\begin{itemize}
+    \item $\mathrm{TVI}_i = 0$ si la tensión nunca cae bajo la envolvente.
+    \item $\mathrm{TVI}_i > 0$ crece tanto con la profundidad como con la duración de la violación.
+    \item Es un indicador local (por barra) que puede agregarse sobre todas las barras.
+\end{itemize}
+
+% COMPLETAR: reemplazar por las ecuaciones de la envolvente del paper [1]
+% (forma de v_env(t) en función de beta y v_st, e incluir la envolvente
+% superior si el paper la define).
+En esta tarea la envolvente se construye según [1] con $\beta = 0.05$ y $v_{st} = 0.9$ p.u.
+
+Como las tensiones se obtienen de una simulación, se discretizan en instantes $t_k$ y la integral~\eqref{eq:tvi} se aproxima mediante la regla del trapecio:
+\begin{equation}
+    \mathrm{TVI}_i \approx \sum_{k} \frac{\Delta_k^{(i)} + \Delta_{k+1}^{(i)}}{2}\,(t_{k+1}-t_k),
+    \qquad
+    \Delta_k^{(i)} = \max\!\big(0,\; v_{env}(t_k) - v_i(t_k)\big).
+\end{equation}
+Por esta razón, los valores numéricos dependen levemente del paso de integración, aunque el conjunto de contingencias con TVI y su orden no deberían cambiar. Para evitar que el ruido numérico genere falsos positivos se utiliza una tolerancia pequeña $\varepsilon$ y se considera que existe violación solo si $\mathrm{TVI}_i > \varepsilon$.
+
+La TVI total de una contingencia $k$ es la suma sobre todas las barras:
+\begin{equation}
+    \mathrm{TVI}_{total}^{(k)} = \sum_{i} \mathrm{TVI}_i^{(k)}.
+\end{equation}
+
+\subsection{Análisis de contingencias}
+
+El análisis de contingencias evalúa la respuesta del sistema ante la pérdida de un elemento. En esta tarea cada contingencia consiste en:
+
+\begin{enumerate}
+    \item un cortocircuito trifásico franco al $50$\% de la línea en $t = 0$~s;
+    \item la desconexión de la línea fallada en $t = 0.1$~s, es decir, un despeje a los $100$~ms.
+\end{enumerate}
+
+La apertura de la línea debe modelarse mediante un evento de simulación y no cambiando su estado de servicio en el caso de estudio. De lo contrario, la línea quedaría fuera de servicio de forma permanente y las contingencias siguientes se simularían con una línea menos. Además, los eventos de la corrida anterior deben eliminarse al inicio de cada simulación, para evitar su acumulación.
+
+En los corredores de doble circuito, la contingencia se simula una sola vez sobre el circuito principal y los circuitos paralelos (sufijo \texttt{\_rep}) se excluyen. Las contingencias se ordenan de mayor a menor TVI total, y las barras se ordenan según su TVI acumulada, es decir, la suma de sus aportes en todas las contingencias:
+\begin{equation}
+    \mathrm{TVI}_i^{acum} = \sum_{k} \mathrm{TVI}_i^{(k)}.
+\end{equation}
+Las barras con mayor TVI acumulada son las candidatas a alojar compensación dinámica.
+
+\subsection{Compensación dinámica de reactivos: STATCOM}
+
+Un STATCOM (\textit{static synchronous compensator}) es un compensador basado en un convertidor de fuente de tensión (VSC) conectado en derivación a la red. Puede inyectar o absorber potencia reactiva de forma continua y muy rápida, y actúa como fuente de corriente reactiva controlada. Su potencia reactiva puede expresarse como
+\begin{equation}
+    Q = V \cdot I_q,
+\end{equation}
+donde $V$ es la tensión en el punto de conexión e $I_q$ la corriente reactiva inyectada. A diferencia de un compensador estático de reactivos (SVC), cuya capacidad es proporcional a $V^2$, el STATCOM mantiene su capacidad de inyección de corriente incluso con tensiones bajas, hasta su límite de corriente. Esto lo hace especialmente adecuado para el soporte durante y después de una falla. En una recuperación retardada de tensión, el STATCOM suministra la potencia reactiva que demandan los motores al reacelerar, lo que acorta el tiempo de recuperación y reduce la TVI.
+
+En PowerFactory, el STATCOM se modela a partir de una plantilla de la librería \textit{Templates}, compuesta por un generador estático (\texttt{ElmGenStat}), un transformador de unidad y un modelo compuesto con el control (DSL). Las condiciones de modelación de esta tarea son:
+
+\begin{itemize}
+    \item transformador de unidad de $345/34.5$~kV y $200$~MVA;
+    \item eliminación de los capacitores switcheables de la plantilla;
+    \item desactivación de la opción \textit{A-stable integration algorithm} en la pestaña RMS, tanto del \texttt{ElmGenStat} como del DSL del control;
+    \item reducción del paso de integración de la simulación RMS.
+\end{itemize}
+
+La capacidad nominal de cada STATCOM (parámetro \texttt{sgn} del \texttt{ElmGenStat}) es la variable de decisión de la optimización. Un \texttt{ElmGenStat} con potencia nominal nula no es un equipo válido, por lo que si la capacidad es menor que $1$~Mvar el equipo se pone fuera de servicio.
+
+\subsection{Optimización de caja negra}
+
+La TVI se obtiene de una simulación dinámica, por lo que no existe una expresión analítica que relacione las capacidades de los STATCOM con la TVI. Se trata de una función de caja negra: recibe un vector de capacidades y entrega un valor, sin información de gradientes. Para este tipo de problemas se utilizan métodos heurísticos, que solo requieren evaluar la función.
+
+\subsubsection{Formulación del problema}
+
+Se minimiza la capacidad total instalada, sujeto a que la TVI total sea cero en cada contingencia:
+\begin{align}
+    \min_{Q_1,\dots,Q_4} \quad & \sum_{i=1}^{4} Q_i \\
+    \text{s.a.} \quad & \mathrm{TVI}_{total}^{(k)}(Q_1,\dots,Q_4) = 0, \quad k = 1,2,3, \\
+    & Q_{min} \le Q_i \le Q_{max},
+\end{align}
+con $Q_{min} = 0$ y $Q_{max} = 200$~Mvar (potencia nominal del transformador).
+
+\subsubsection{Manejo de restricciones mediante penalización}
+
+Como MVMO no maneja restricciones de forma explícita, la restricción se incorpora a la función objetivo mediante una penalización:
+\begin{equation}
+    f(\mathbf{Q}) =
+    \begin{cases}
+        \displaystyle\sum_{i=1}^{4} Q_i & \text{si ninguna contingencia presenta TVI}, \\[2mm]
+        10^{6} & \text{si alguna presenta TVI o una simulación no converge}.
+    \end{cases}
+\end{equation}
+Toda solución infactible recibe un valor elevado y es descartada por el algoritmo. Entre las soluciones factibles, se selecciona la de menor capacidad total. Si al finalizar el mejor valor de $f$ es $10^6$, el algoritmo no encontró una solución factible.
+
+\subsubsection{Evaluación secuencial con corte anticipado}
+
+Cada evaluación de $f$ requiere hasta tres simulaciones RMS de $20$~s, una por contingencia, por lo que el tiempo total de optimización depende del número de simulaciones ejecutadas. Para reducirlo se emplea la evaluación secuencial con corte anticipado (Intervención II de [1]): las contingencias se simulan en orden y, en cuanto una presenta TVI, la función retorna la penalización y termina, sin simular las restantes. Una solución que ya viola en una contingencia es infactible, y simular las demás no modifica el valor de $f$.
+
+Las contingencias se evalúan en orden decreciente de severidad (Line 28 - 29, Line 25 - 26, Line 26 - 27), porque la más severa es la que con mayor probabilidad descarta una solución. Si $N_{ev}$ es el número de evaluaciones, sin corte anticipado se ejecutarían $3N_{ev}$ simulaciones. Con corte anticipado el número real $N_{sim}$ cumple
+\begin{equation}
+    N_{ev} \le N_{sim} \le 3N_{ev},
+\end{equation}
+y la diferencia $3N_{ev} - N_{sim}$ cuantifica el ahorro.
+
+\subsection{Algoritmo MVMO}
+
+El algoritmo \textit{Mean-Variance Mapping Optimization} (MVMO) es un método heurístico de optimización global que trabaja con una sola solución padre y se caracteriza por usar pocas evaluaciones de la función objetivo, lo que lo hace adecuado cuando cada evaluación es costosa. Sus elementos principales son:
+
+\begin{enumerate}
+    \item \textbf{Normalización.} Todas las variables se manejan en el intervalo $[0,1]$. Dentro de la función objetivo se convierten a unidades físicas mediante
+    \begin{equation}
+        Q_i = Q_{min} + x_i\,(Q_{max} - Q_{min}),
+    \end{equation}
+    donde $x_i \in [0,1]$ es la variable normalizada.
+
+    \item \textbf{Archivo de soluciones.} El algoritmo almacena las $n$ mejores soluciones encontradas, ordenadas por su valor de $f$. La mejor solución del archivo actúa como padre.
+
+    \item \textbf{Media y varianza.} A partir del archivo se calculan, para cada variable $i$, la media $\bar{x}_i$ y la varianza $v_i$:
+    \begin{equation}
+        \bar{x}_i = \frac{1}{n}\sum_{j=1}^{n} x_{i,j}, \qquad
+        v_i = \frac{1}{n}\sum_{j=1}^{n} \left(x_{i,j} - \bar{x}_i\right)^2 .
+    \end{equation}
+
+    \item \textbf{Función de mapeo.} Para generar una nueva solución, a un subconjunto de variables del padre se les asigna un valor aleatorio $x_i \in [0,1]$, que luego se transforma mediante una función de mapeo cuya forma depende de $\bar{x}_i$ y $v_i$:
+    \begin{equation}
+        h(\bar{x}_i, s_{i1}, s_{i2}, u) = \bar{x}_i\left(1 - e^{-u\,s_{i1}}\right) + \left(1-\bar{x}_i\right) e^{-(1-u)\,s_{i2}},
+    \end{equation}
+    \begin{equation}
+        x_i^{*} = h_x + (1 - h_1 + h_0)\,x_i - h_0,
+    \end{equation}
+    con $h_x = h(\bar{x}_i, s_{i1}, s_{i2}, x_i)$, $h_0 = h(\bar{x}_i, s_{i1}, s_{i2}, 0)$ y $h_1 = h(\bar{x}_i, s_{i1}, s_{i2}, 1)$. Los factores de forma $s_{i1}$ y $s_{i2}$ se calculan a partir de la varianza, de modo que $s_i \propto -\ln v_i$. Cuando la varianza disminuye (el archivo converge), la función de mapeo concentra los valores generados alrededor de la media; cuando es grande, mantiene la exploración.
+
+    \item \textbf{Actualización.} Si la nueva solución mejora a la peor del archivo, la reemplaza, y el archivo se reordena. El proceso se repite hasta alcanzar el número de evaluaciones definido.
+\end{enumerate}
+
+De este modo MVMO equilibra exploración y explotación sin requerir gradientes. Como el algoritmo es estocástico, los resultados dependen de la semilla del generador de números aleatorios. Por ello se fija la semilla $42$ una sola vez, antes de ejecutar MVMO. Si se fijara dentro de la función objetivo, el algoritmo generaría siempre la misma secuencia de números. Distintas ejecuciones o distintos grupos pueden converger a distribuciones de capacidad diferentes con totales similares, y lo relevante es que la solución elimine la TVI y esté bien justificada.
+
+\subsection{Verificación de resultados}
+
+Una solución se considera válida si cumple simultáneamente:
+
+\begin{itemize}
+    \item el mejor valor de $f$ es menor que $10^6$;
+    \item al simular nuevamente las tres contingencias con las capacidades óptimas, la función de cálculo de la TVI retorna una lista vacía en cada una, es decir, $\mathrm{TVI}_{total}^{(k)} = 0$ para $k = 1, 2, 3$.
+\end{itemize}

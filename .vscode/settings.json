@@ -1,0 +1,22 @@
+{
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/.jj": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "**/c:\\Users\\jivn0\\OneDrive\\Documentos\\Latex\\Proyectos-latex\\Prueba\\main.aux": true,
+        "**/c:\\Users\\jivn0\\OneDrive\\Documentos\\Latex\\Proyectos-latex\\Prueba\\main.log": true,
+        "**/c:\\Users\\jivn0\\OneDrive\\Documentos\\Latex\\Proyectos-latex\\Prueba\\main.gz": true,
+        "**/c:\\Users\\jivn0\\OneDrive\\Documentos\\Latex\\Proyectos-latex\\Prueba\\main.out": true,
+        "**/c:\\Users\\jivn0\\OneDrive\\Documentos\\Latex\\Proyectos-latex\\Prueba\\Desarrollo\\Bibliografia.aux": true,
+        "**/c:\\Users\\jivn0\\OneDrive\\Documentos\\Latex\\Proyectos-latex\\Prueba\\Desarrollo\\Bibliografia.log": true,
+        "**/c:\\Users\\jivn0\\OneDrive\\Documentos\\Latex\\Proyectos-latex\\Prueba\\Desarrollo\\Bibliografia.gz": true,
+        "**/c:\\Users\\jivn0\\OneDrive\\Documentos\\Latex\\Proyectos-latex\\Prueba\\Desarrollo\\Bibliografia.out": true,
+        "**/c:\\Users\\jivn0\\OneDrive\\Documentos\\Latex\\Proyectos-latex\\Prueba\\Base.aux": true,
+        "**/c:\\Users\\jivn0\\OneDrive\\Documentos\\Latex\\Proyectos-latex\\Prueba\\Base.log": true,
+        "**/c:\\Users\\jivn0\\OneDrive\\Documentos\\Latex\\Proyectos-latex\\Prueba\\Base.gz": true,
+        "**/c:\\Users\\jivn0\\OneDrive\\Documentos\\Latex\\Proyectos-latex\\Prueba\\Base.out": true
+    }
+}
