@@ -1,0 +1,95 @@
+
+\subsection{Código de la Pregunta a): función \texttt{calcular\_TVI}}
+\label{anexo:codigo_a}
+
+\definecolor{gray}{gray}{0.5}
+
+\begin{lstlisting}
+import numpy as np
+
+BETA = 0.05
+VST = 0.9
+T_FALLA = 0.0
+T_DESPEJE = 0.1
+T_END = 20.0
+TOL = 1e-6
+
+_trapz = getattr(np, "trapezoid", None) or np.trapz
+
+
+def envolvente(t, beta=BETA, vst=VST, t_end=T_END):
+    """Envolventes inferior y superior segun Wildenhues et al."""
+    t = np.asarray(t, dtype=float)
+    t_low = ((t / t_end) * np.exp(t / t_end)) ** beta / np.exp(beta) * vst
+    t_upp = 2.0 - t_low
+    return t_low, t_upp
+
+
+def calcular_TVI(app, nombre_linea):
+    """Retorna [[barra, TVI], ...] con TVI != 0, [] si no hay
+    violaciones o False si la simulacion no converge."""
+    try:
+        # 1. Preparar eventos (se reutilizan los del caso de estudio)
+        evt = app.GetFromStudyCase("IntEvt")
+        linea = app.GetCalcRelevantObjects(nombre_linea + ".ElmLne")[0]
+        falla = evt.GetContents("ShcLineEvent*")[0]
+        disparo = evt.GetContents("TripLineEvent*")[0]
+        for e in evt.GetContents():
+            e.outserv = 1
+        falla.outserv = 0
+        disparo.outserv = 0
+
+        # 2. Cortocircuito trifasico franco al 50 % en t = 0
+        falla.p_target = linea
+        falla.time = T_FALLA
+        falla.i_shc = 0
+        falla.R_f = 0.0
+        falla.X_f = 0.0
+        falla.fshcloc = 50.0
+
+        # 3. Apertura de la linea en t = 0.1 s (evento, no outserv)
+        disparo.p_target = linea
+        disparo.time = T_DESPEJE
+        disparo.i_switch = 0
+
+        # 4. Condiciones iniciales y simulacion RMS hasta 20 s
+        inc = app.GetFromStudyCase("ComInc")
+        sim = app.GetFromStudyCase("ComSim")
+        inc.iopt_sim = "rms"
+        if inc.Execute() != 0:
+            return False
+        sim.tstop = T_END
+        if sim.Execute() != 0:
+            return False
+
+        # 5. Extraer tensiones en p.u. de las barras
+        res = inc.p_resvar
+        res.Load()
+        n = res.GetNumberOfRows()
+        t = np.array([res.GetValue(i, -1)[1] for i in range(n)])
+        barras = app.GetCalcRelevantObjects("*.ElmTerm")
+        V = {}
+        for b in barras:
+            col = res.FindColumn(b, "m:u")
+            if col < 0:
+                continue
+            V[b.loc_name] = np.array(
+                [res.GetValue(i, col)[1] for i in range(n)])
+        res.Release()
+    except Exception:
+        return False
+
+    # 6. Envolventes y TVI por barra (desde el despeje hasta t_end)
+    mask = t >= T_DESPEJE
+    tc = t[mask]
+    t_low, t_upp = envolvente(tc)
+
+    salida = []
+    for nombre, v in V.items():
+        vc = v[mask]
+        viol = np.maximum(t_low - vc, 0.0) + np.maximum(vc - t_upp, 0.0)
+        tvi = float(_trapz(viol, tc))
+        if tvi > TOL:
+            salida.append([nombre, tvi])
+    return salida
+\end{lstlisting}

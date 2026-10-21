@@ -41,33 +41,32 @@
 \usepackage{comment}
 \usepackage{amsfonts}
 \usepackage{makecell}
-\usepackage{float}
-
-
 %\usepackage{subfigure}
 \usepackage{subcaption}
 \usepackage{placeins}
+%%%%%%%%%%%%%%%%% Configuración listings %%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%% Configuración listings %%%%%%%%%%%%%%%
 \definecolor{dkgreen}{rgb}{0,0.6,0}
 \definecolor{darkblue}{rgb}{0,0,0.6}
 \definecolor{darkgray}{rgb}{0.3,0.3,0.3}
 \definecolor{lightgray}{rgb}{0.98,0.98,0.98}
 \definecolor{mauve}{rgb}{0.58,0,0.82}
-\lstset{frame=tb,
-   language=Matlab,
-   aboveskip=3mm,
-   belowskip=3mm,
-   showstringspaces=false,
-   columns=flexible,
-   basicstyle={\small\ttfamily},
-   numbers=none,
-   numberstyle=\tiny\color{gray},
-   keywordstyle=\color{blue},
-   commentstyle=\color{dkgreen},
-   stringstyle=\color{mauve},
-   breaklines=true,
-   breakatwhitespace=true,
-   tabsize=3}
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\footnotesize,
+    keywordstyle=\color{blue},
+    commentstyle=\color{dkgreen}\itshape,
+    stringstyle=\color{mauve},
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true,
+    breakatwhitespace=true,
+    frame=single,
+    showstringspaces=false,
+    columns=fullflexible,
+    tabsize=3,
+    literate={á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1 {ñ}{{\~n}}1
+}
 %%%%%%%%%%%%%%%%% Encabezado y pie %%%%%%%%%%%%%%%
 \geometry{left=2cm, right=2cm, top=2.5cm, bottom=3cm}
 \pagestyle{fancy}
@@ -97,13 +96,14 @@
         \headrule
         \vspace{1.4cm}
 Autores:\\
+        Enrique Guzmán Ortiz, ROL: 202023018-8\\
+        Pedro Valenzuela González, ROL: 202023009-9\\
         Joaquín Vargas, ROL: 202023004-8\\
         \vspace{0.7cm}
         Profesor: Victor Hinojosa\\
         \vspace{1cm}
         Valparaíso, Chile\\
-        \today
-        
+        \today  
 \end{center}       
 \end{titlepage}
 
@@ -122,9 +122,6 @@ Autores:\\
 \newpage
 \section{Método y desarrollo}
 \input{Desarrollo/Metodo y desarrollo}
-\newpage
-\section{Ensayo}
-\input{Desarrollo/Ensayo}
 \newpage
 \section{Crítica y comentarios}
 \input{Desarrollo/Critica y comentarios}
